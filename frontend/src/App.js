@@ -1,11 +1,13 @@
-import { Button } from "react-bootstrap";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Chat from "./screens/Chat";
+import Home from "./screens/Home";
 
 function App() {
   return (
-    <div className="App">
-      <Button>click</Button>
-      <Button variant="primary">Primary</Button>{" "}
-    </div>
+    <Router>
+      <Route path="/" exact component={Home} />
+      <Route path="/chat" exact component={Chat} />
+    </Router>
   );
 }
 
