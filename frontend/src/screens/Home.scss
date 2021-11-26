@@ -1,0 +1,35 @@
+.home-container {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  .box-container {
+    width: 40%;
+    .heading-container {
+      background: peachpuff;
+      padding: 0.4rem 1rem;
+      text-align: center;
+      border-radius: 9px;
+      h1 {
+        font-weight: 500;
+      }
+    }
+    .main-content-container {
+      background: peachpuff;
+      margin-top: 1rem;
+      border-radius: 9px;
+      .nav-tabs {
+        justify-content: space-around;
+        padding: 0.5rem 0;
+        button {
+          border-radius: 3rem;
+          background: grey;
+          color: white;
+          &:hover,
+          &.active {
+            background: rgba(0, 110, 255, 0.884);
+          }
+        }
+      }
+    }
+  }
+}
