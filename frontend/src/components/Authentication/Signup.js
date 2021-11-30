@@ -10,7 +10,7 @@ const Signup = () => {
 
   const [showPassword, setShowPassword] = useState("password");
 
-  const picHandler = (picture) => {
+  const postDetails = (picture) => {
     console.log(picture);
   };
 
@@ -108,7 +108,7 @@ const Signup = () => {
             type="file"
             accept="image/*"
             size="sm"
-            onChange={(e) => picHandler(e.target.files[0])}
+            onChange={(e) => postDetails(e.target.files[0])}
           />
         </Form.Group>
 
