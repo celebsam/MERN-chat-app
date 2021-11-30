@@ -10,6 +10,12 @@ const Login = () => {
     e.preventDefault();
   };
 
+  const guestHandler = () => {
+    console.log("Guest");
+    setEmail("guest@example.com");
+    setPassword("123456");
+  };
+
   return (
     <div
       className="form-container"
@@ -62,6 +68,19 @@ const Login = () => {
           style={{ display: "block", margin: "auto", padding: "0.5rem 2rem" }}
         >
           Login
+        </Button>
+
+        <Button
+          variant="danger"
+          onClick={guestHandler}
+          style={{
+            display: "block",
+            margin: "auto",
+            padding: "0.5rem 2rem",
+            marginTop: "1rem",
+          }}
+        >
+          Login as Guest
         </Button>
       </Form>
     </div>
