@@ -1,27 +1,17 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const chats = require("./data/data");
 const connection = require("./config/db");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 dotenv.config();
 
 app.use(express.json());
 
+app.use("/api/user", userRoutes);
+
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the chart app" });
-});
-
-app.get("/api/chat", (req, res) => {
-  res.send(chats);
-});
-
-app.get("/api/chat/:id", (req, res) => {
-  const { id } = req.params;
-  const chat = chats.find((chat) => {
-    return chat._id === id;
-  });
-  res.status(200).json({ chat });
+  res.send("<h1>Welcome to the chat app</h1>");
 });
 
 const PORT = process.env.PORT || 5000;
