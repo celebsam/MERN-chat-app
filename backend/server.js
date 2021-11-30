@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+require("express-async-errors");
 const connection = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 
