@@ -23,7 +23,7 @@ const login = async (req, res) => {
 };
 
 // @desc register a new user
-// @route POST /api/user/
+// @route POST /api/user
 // @access public
 const register = async (req, res) => {
   const { name, email, password, pic } = req.body;
