@@ -25,12 +25,6 @@ const Signup = () => {
   const pictureHandler = (chosenPic) => {
     setCloudLoading(true);
     if (!chosenPic || chosenPic === undefined) {
-      // <Toast delay={3000}>
-      //   <Toast.Header>
-      //     <strong className="me-auto">ERROR!</strong>
-      //   </Toast.Header>
-      //   <Toast.Body>You did not slelect an image!</Toast.Body>
-      // </Toast>;
       <Toast>
         <Toast.Header>
           <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
