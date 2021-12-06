@@ -22,7 +22,7 @@ const login = async (req, res) => {
   }
 };
 
-// @desc register a new user
+// @desc register new user
 // @route POST /api/user
 // @access public
 const register = async (req, res) => {
