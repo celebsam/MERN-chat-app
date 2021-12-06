@@ -22,9 +22,10 @@ const Login = () => {
       style={{ width: "90%", margin: "auto", paddingBottom: "2rem" }}
     >
       <Form>
-        <Form.Group className="mb-3" controlId="email">
+        <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
+            id="loginemail"
             type="email"
             placeholder="Enter email"
             value={email}
@@ -37,7 +38,7 @@ const Login = () => {
           <InputGroup className="mb-2">
             <FormControl
               type={showPassword}
-              id="password"
+              id="loginpassword"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
