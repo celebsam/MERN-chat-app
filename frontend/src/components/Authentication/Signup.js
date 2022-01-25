@@ -5,8 +5,10 @@ import {
   FormControl,
   InputGroup,
   Spinner,
-  Toast,
 } from "react-bootstrap";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -15,24 +17,77 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pic, setPic] = useState("");
   const [cloudLoading, setCloudLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState("password");
 
-  const submitHandler = (e) => {
+  const history = useHistory();
+
+  // code to submit the form starts here
+  const submitHandler = async (e) => {
+    setLoading(true);
     e.preventDefault();
+    // if empty
+    if (!name || !email || !password || !confirmPassword) {
+      console.log("nothing");
+      toast.error("All fields are required.", {
+        position: "top-center",
+      });
+      setLoading(false);
+      return;
+    }
+    // if passwords do not matchPassword
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match.", {
+        position: "top-center",
+      });
+      setLoading(false);
+      return;
+    }
+    console.log({ name, email, password, confirmPassword, pic });
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/api/user",
+        {
+          name,
+          email,
+          password,
+          pic,
+        },
+        config
+      );
+
+      toast.success("Registration successful.", {
+        position: "top-center",
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+      history.push("/chats");
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error(error, {
+        position: "top-center",
+      });
+    }
   };
+  // code to submit the form ends here
 
   const pictureHandler = (chosenPic) => {
+    console.log(chosenPic);
     setCloudLoading(true);
     if (!chosenPic || chosenPic === undefined) {
-      <Toast>
-        <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-          <strong className="me-auto">Error</strong>
-          <small>11 mins ago</small>
-        </Toast.Header>
-        <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-      </Toast>;
+      toast.error("An image was not selected.", {
+        position: "top-center",
+      });
+      console.log("No picture was chosen");
       return;
     }
     if (chosenPic.type === "image/jpeg" || chosenPic.type === "image/png") {
@@ -55,13 +110,10 @@ const Signup = () => {
           console.log(err);
         });
     } else {
-      <Toast>
-        <Toast.Header>
-          <strong className="me-auto">Error</strong>
-          <small>11 mins ago</small>
-        </Toast.Header>
-        <Toast.Body>Hello,! This is a toast message.</Toast.Body>
-      </Toast>;
+      setCloudLoading(false);
+      toast.error("The file format is not supported.", {
+        position: "top-center",
+      });
     }
   };
 
@@ -160,20 +212,38 @@ const Signup = () => {
             onChange={(e) => pictureHandler(e.target.files[0])}
           />
         </Form.Group>
-        {cloudLoading ? (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        ) : null}
 
         <Button
           variant="primary"
           type="submit"
+          disabled={cloudLoading}
           onClick={submitHandler}
           style={{ display: "block", margin: "auto", padding: "0.5rem 2rem" }}
         >
-          Sign Up
+          {cloudLoading ? (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          ) : (
+            "Sign Up"
+          )}
         </Button>
+        {loading ? (
+          <div
+            style={{ width: "100%", textAlign: "center", marginTop: "1rem" }}
+          >
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : null}
       </Form>
     </div>
   );

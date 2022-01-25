@@ -17,8 +17,8 @@ const login = async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(404);
-    throw Error("Login failed!");
+    res.status(400);
+    throw Error("Login failed! Incorrect email and password combination.");
   }
 };
 
