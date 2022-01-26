@@ -29,7 +29,7 @@ const Signup = () => {
     setLoading(true);
     e.preventDefault();
     // if empty
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword || !pic) {
       console.log("nothing");
       toast.error("All fields are required.", {
         position: "top-center",
@@ -38,6 +38,14 @@ const Signup = () => {
       return;
     }
     // if passwords do not matchPassword
+
+    if (password.length < 6) {
+      toast.error("Min of 6 charaters for password field.", {
+        position: "top-center",
+      });
+      setLoading(false);
+      return;
+    }
     if (password !== confirmPassword) {
       toast.error("Passwords do not match.", {
         position: "top-center",
@@ -88,6 +96,7 @@ const Signup = () => {
         position: "top-center",
       });
       console.log("No picture was chosen");
+      setCloudLoading(false);
       return;
     }
     if (chosenPic.type === "image/jpeg" || chosenPic.type === "image/png") {

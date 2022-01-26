@@ -1,11 +1,14 @@
 .home-container {
+  background-image: url("../images/Background\ 1920px.jfif");
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100vh;
   display: grid;
   place-items: center;
   .box-container {
     width: 40%;
     .heading-container {
-      background: peachpuff;
+      background: rgb(249, 185, 255);
       padding: 0.4rem 1rem;
       text-align: center;
       border-radius: 9px;
@@ -14,7 +17,7 @@
       }
     }
     .main-content-container {
-      background: peachpuff;
+      background: rgb(235, 185, 255);
       margin-top: 1rem;
       border-radius: 9px;
       .nav-tabs {
