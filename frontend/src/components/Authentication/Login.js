@@ -1,13 +1,62 @@
 import React, { useState } from "react";
-import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  FormControl,
+  InputGroup,
+  Spinner,
+} from "react-bootstrap";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState("password");
+  const [loading, setLoading] = useState(false);
 
-  const loginHandler = (e) => {
+  const history = useHistory();
+
+  const loginHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    if (!email || !password) {
+      toast.error("All fields are required.", {
+        position: "top-center",
+      });
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/api/user/login",
+        { email, password },
+        config
+      );
+
+      toast.success("Login successful.", {
+        position: "top-center",
+      });
+      setLoading(false);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      history.push("/chats");
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        position: "top-center",
+      });
+      setLoading(false);
+      return;
+    }
+
+    console.log(email, password);
   };
 
   const guestHandler = () => {
@@ -68,7 +117,20 @@ const Login = () => {
           onClick={loginHandler}
           style={{ display: "block", margin: "auto", padding: "0.5rem 2rem" }}
         >
-          Login
+          {loading ? (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          ) : (
+            "Login"
+          )}
         </Button>
 
         <Button
@@ -81,7 +143,7 @@ const Login = () => {
             marginTop: "1rem",
           }}
         >
-          Login as Guest
+          Request guest user credentials
         </Button>
       </Form>
     </div>

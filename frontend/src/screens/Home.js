@@ -9,7 +9,7 @@ const Home = () => {
     <section className="home-container">
       <div className="box-container">
         <div className="heading-container">
-          <h1>SaMedia</h1>
+          <h1>Buzzrepublic</h1>
         </div>
         <div className="main-content-container">
           <Tabs
