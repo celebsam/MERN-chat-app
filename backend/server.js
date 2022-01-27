@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 require("express-async-errors");
 const connection = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const { errorHandler, pageNotFound } = require("./middlewares/errorMiddleware");
 
 const app = express();
@@ -11,6 +12,7 @@ dotenv.config();
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to the chat app</h1>");
